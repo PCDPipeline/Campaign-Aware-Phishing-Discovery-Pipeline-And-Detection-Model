@@ -74,9 +74,10 @@ The clustering module expects a **pandas DataFrame** containing URL instances en
 
 <h2 style="color:#2b7de9;">2️⃣ Graph-Based Phishing Detection (G2)</h2>
 
-We release our **GGN based detection models** based on  **Heterogeneous GraphSAGE** and HAN (2-layer)
+We release our **best-performing phishing detection model** based on a
+3-layer **Heterogeneous GraphSAGE (G2)** architecture.
 
-The models operates on a heterogeneous graph capturing relationships between
+The model operates on a heterogeneous graph capturing relationships between
 URLs and infrastructure resources observed during page loading.
 
 
@@ -115,3 +116,54 @@ The model outputs for each URL:
 • predicted label (0 = benign, 1 = phishing)  
 
 This reproduces the detection stage described in the paper.
+
+<h2 style="color:#2b7de9;">1️3️⃣ Graph-Based Phishing Detection (G1)</h2>
+
+We release our **homogeneous URL–URL phishing detection model**
+based on Graph Neural Networks operating on the **G1 graph**
+described in the paper.
+
+The G1 graph connects URL instances that share internal resources
+observed during page loading (paths and content fingerprints).
+
+The model performs **node classification on URL nodes**
+to predict <b>phishing vs benign</b>.
+
+<h3>Released Artifacts</h3>
+
+We provide all components required to run inference:
+
+• Base homogeneous graph and feature construction specification  
+• Frozen feature vocabularies and mappings  
+• Pre-computed node feature matrices  
+• Trained G1 GNN model  
+• Training and testing / inference code
+
+📁 <code>GNN-G1/</code>
+
+<h3>Using the Model on New Data</h3>
+
+Users must construct a request-level table and generate
+the G1 graph features following the provided specification.
+
+Required tensors:
+
+• <code>new_x</code> — URL node feature matrix (N × D)  
+• <code>new_edge_index</code> — URL ↔ URL edges (2 × E)  
+• <code>new_edge_attr</code> — edge feature matrix (E × 2)
+
+The new nodes are **merged into the released base graph**
+before running inference.
+
+This ensures predictions leverage the full
+training graph context (transductive inference).
+
+<h3>Inference Output</h3>
+
+The model outputs for each URL:
+
+• predicted label (0 = benign, 1 = phishing)
+
+This reproduces the G1 detection stage described in the paper.
+
+---
