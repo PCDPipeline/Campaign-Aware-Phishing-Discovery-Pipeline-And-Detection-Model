@@ -71,3 +71,48 @@ The clustering module expects a **pandas DataFrame** containing URL instances en
   "requestId": "request_1"
 }
 ```
+
+<h2 style="color:#2b7de9;">2️⃣ Graph-Based Phishing Detection (G2)</h2>
+
+We release our **best-performing phishing detection model** based on a
+3-layer **Heterogeneous GraphSAGE (G2)** architecture.
+
+The model operates on a heterogeneous graph capturing relationships between
+URLs and infrastructure resources observed during page loading.
+
+
+The model performs **node classification on URL nodes**
+to predict <b>phishing vs benign</b>.
+
+<h3>Released Artifacts</h3>
+
+We provide all components required to run inference:
+
+• Trained G2 Heterogeneous GraphSAGE model  
+• Base heterogeneous graph used during training  
+• Frozen feature vocabulary (<code>vocab.json</code>)  
+• Inference utilities for merging user data into the graph  
+
+📁 <code>GNN-G2/</code>
+
+<h3>Using the Model on New Data</h3>
+
+Users must construct feature tensors using test data
+following the provided vocabulary ordering:
+
+Required tensors:
+
+• <code>new_url_x</code> — URL node features  (N × D_url)  
+• <code>new_har_x</code> — HAR node features  (M × D_har)  
+• <code>edge_url_har</code> — URL → HAR edges (local indices)  
+• <code>edge_har_url</code> — HAR → URL edges (local indices)  
+• <code>edge_attr</code> — optional edge attributes  
+
+
+<h3>Inference Output</h3>
+
+The model outputs for each URL:
+
+• predicted label (0 = benign, 1 = phishing)  
+
+This reproduces the detection stage described in the paper.
