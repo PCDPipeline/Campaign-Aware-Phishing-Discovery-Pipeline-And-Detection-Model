@@ -74,10 +74,9 @@ The clustering module expects a **pandas DataFrame** containing URL instances en
 
 <h2 style="color:#2b7de9;">2️⃣ Graph-Based Phishing Detection (G2)</h2>
 
-We release our **best-performing phishing detection model** based on a
-3-layer **Heterogeneous GraphSAGE (G2)** architecture.
+We release our **GGN based detection models** based on  **Heterogeneous GraphSAGE** and HAN (2-layer)
 
-The model operates on a heterogeneous graph capturing relationships between
+The models operates on a heterogeneous graph capturing relationships between
 URLs and infrastructure resources observed during page loading.
 
 
